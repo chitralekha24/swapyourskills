@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Rate Partner | SwapYourSkills</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  body { background: #eef2f6; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
+  .navbar { background: linear-gradient(90deg, #0d6efd, #0a58ca); }
+  .card { border: none; border-radius: 14px; background: #fff; box-shadow: 0 6px 20px rgba(0,0,0,0.08); margin-top: 50px; }
+  .btn-primary { border-radius: 8px; }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark mb-4">
+  <div class="container">
+    <a class="navbar-brand fw-semibold" href="{{ url_for('dashboard') }}">SwapYourSkills</a>
+    <div class="d-flex gap-2">
+      <a class="btn btn-light btn-sm" href="{{ url_for('dashboard') }}">Dashboard</a>
+      <a class="btn btn-light btn-sm" href="{{ url_for('profile') }}">Profile</a>
+      <a class="btn btn-light btn-sm" href="{{ url_for('notifications') }}">Notifications</a>
+      <a class="btn btn-outline-light btn-sm" href="{{ url_for('logout') }}">Logout</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Rating Card -->
+<div class="container" style="max-width: 500px;">
+  <div class="card p-4">
+    <h3 class="mb-4 text-center">Rate Your Partner</h3>
+    
+    <p><strong>Partner Name:</strong> {{ partner.username }}</p>
+    <p><strong>Email:</strong> {{ partner.email }}</p>
+    <p><strong>Skill:</strong> {{ request.skill_name }}</p>
+
+    {% if already_rated %}
+      <div class="alert alert-info text-center">You have already rated this partner: {{ request.rating_your }}</div>
+    {% else %}
+      <form method="POST" action="{{ url_for('rate', req_id=request.id) }}">
+        <div class="mb-3">
+          <label for="rating" class="form-label">Your Rating (1-5)</label>
+          <input type="number" class="form-control" id="rating" name="rating" min="1" max="5" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Submit Rating</button>
+      </form>
+    {% endif %}
+
+    <a href="{{ url_for('ratings') }}" class="btn btn-secondary w-100 mt-3">Back to Ratings</a>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

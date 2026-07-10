@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard | SwapYourSkills</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet"/>
+  <style>
+    body { background: #f0f2f5; font-family: Arial, sans-serif; }
+    .top-right { position: absolute; top: 15px; right: 20px; display: flex; align-items: center; gap: 15px; }
+    .menu { cursor: pointer; }
+    .dropdown-menu { right: 0; left: auto; }
+    .welcome { font-weight: bold; color: white; font-size: 1.1rem; margin-right: 15px; }
+    .card-dashboard { border-radius: 15px; padding: 50px 40px; box-shadow: 0 6px 20px rgba(0,0,0,0.2); width: 100%; max-width: 500px; transition: transform 0.3s, box-shadow 0.3s; }
+    .card-dashboard:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+    .card-dashboard i { font-size: 5rem; color: #0d6efd; }
+    .card-dashboard h3 { margin-top: 25px; font-size: 2rem; font-weight: bold; }
+    .btn-go { margin-top: 30px; font-size: 1.3rem; padding: 12px 30px; }
+    .notification-badge { background: red; color: white; border-radius: 50%; font-size: 0.7rem; padding: 3px 7px; position: absolute; top: -5px; right: -5px; }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container position-relative">
+    <a class="navbar-brand" href="{{ url_for('dashboard') }}">SwapYourSkills</a>
+    <div class="top-right">
+      <span class="welcome">Welcome, {{ user.username }}!</span>
+      <a href="{{ url_for('profile') }}" class="text-white fs-4" title="Profile"><i class="bi bi-person-circle"></i></a>
+      <a href="{{ url_for('notifications') }}" class="text-white fs-4 position-relative" title="Notifications">
+        <i class="bi bi-bell-fill"></i>
+        {% if notif_count > 0 %}
+          <span class="notification-badge">{{ notif_count }}</span>
+        {% endif %}
+      </a>
+      <div class="dropdown">
+        <span class="text-white fs-4 menu" data-bs-toggle="dropdown">&#9776;</span>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="{{ url_for('add_skills') }}"><i class="bi bi-tools"></i> Add Skills</a></li>
+          <li><a class="dropdown-item" href="{{ url_for('requests_view') }}"><i class="bi bi-envelope-fill"></i> Requests</a></li>
+          <li><a class="dropdown-item" href="{{ url_for('ratings') }}"><i class="bi bi-people-fill"></i> Ratings</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="{{ url_for('logout') }}"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="container d-flex justify-content-center align-items-center" style="height: 80vh;">
+  <div class="card text-center card-dashboard">
+    <i class="bi bi-tools"></i>
+    <h3>Add Skills</h3>
+    <a href="{{ url_for('add_skills') }}" class="btn btn-primary btn-go">Go</a>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

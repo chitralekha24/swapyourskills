@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ratings | SwapYourSkills</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  body { background: #eef2f6; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
+  .navbar { background: linear-gradient(90deg, #0d6efd, #0a58ca); }
+  .card { border: none; border-radius: 14px; background: #fff; box-shadow: 0 6px 20px rgba(0,0,0,0.08); margin-bottom:20px; }
+  .btn-primary { border-radius: 8px; }
+  table th, table td { vertical-align: middle !important; text-align: center; }
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark mb-4">
+  <div class="container">
+    <a class="navbar-brand fw-semibold" href="{{ url_for('dashboard') }}">SwapYourSkills</a>
+    <div class="d-flex gap-2">
+      <a class="btn btn-light btn-sm" href="{{ url_for('dashboard') }}">Dashboard</a>
+      <a class="btn btn-light btn-sm" href="{{ url_for('profile') }}">Profile</a>
+      <a class="btn btn-light btn-sm" href="{{ url_for('notifications') }}">Notifications</a>
+      <a class="btn btn-outline-light btn-sm" href="{{ url_for('logout') }}">Logout</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container" style="max-width: 900px;">
+  <div class="card p-4">
+    <h3 class="mb-4">Your Ratings</h3>
+
+    {% if matches %}
+      <table class="table table-bordered table-striped">
+        <thead class="table-light">
+          <tr>
+            <th>Partner</th>
+            <th>Age</th>
+            <th>Occupation</th>
+            <th>Your Rating</th>
+            <th>Partner Rating</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for m in matches %}
+          <tr>
+            <td>{{ m.partner_name }}</td>
+            <td>{{ m.partner_age or 'N/A' }}</td>
+            <td>{{ m.partner_occupation or 'N/A' }}</td>
+            <td>{{ m.rating_your or 'Not Rated' }}</td>
+            <td>{{ m.rating_partner or 'Not Rated' }}</td>
+            <td>
+              <a href="{{ url_for('rate', req_id=m.id) }}" class="btn btn-primary btn-sm">Rate Partner</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="text-center">No ratings available yet.</p>
+    {% endif %}
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
